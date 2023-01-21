@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {I}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {II}Theory}{3}{section.2}%
+\contentsline {subsection}{\numberline {\mbox {II-A}}U-Net}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {\mbox {II-B}}Attention}{4}{subsection.2.2}%
+\contentsline {subsection}{\numberline {\mbox {II-C}}Extending Attention to Vision}{4}{subsection.2.3}%
+\contentsline {subsection}{\numberline {\mbox {II-D}}TransUNet}{5}{subsection.2.4}%
+\contentsline {subsubsection}{\numberline {\mbox {II-D}1}Hybrid Model}{5}{subsubsection.2.4.1}%
+\contentsline {subsubsection}{\numberline {\mbox {II-D}2}Cascaded Upsampler (CUP)}{5}{subsubsection.2.4.2}%
+\contentsline {section}{\numberline {III}Experiments and Results}{5}{section.3}%
+\contentsline {subsection}{\numberline {\mbox {III-A}}Performance Metrics}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {\mbox {III-B}}Original Results \blx@tocontentsinit {0}\cite {chen2021transunet}}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {\mbox {III-C}}Replicated Results}{7}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {\mbox {III-C}1}Training}{7}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {\mbox {III-C}2}Inference}{8}{subsubsection.3.3.2}%
+\contentsline {section}{\numberline {IV}Conclusion}{8}{section.4}%

@@ -6,3 +6,5 @@
 *.bbl
 *.xml
 *.gz
+*.lof
+*.lot

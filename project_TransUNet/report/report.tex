@@ -23,14 +23,27 @@
 \usepackage{physics}
 \usepackage{lipsum}
 \usepackage{titlesec}
-
-
+\usepackage{diagbox}
+\usepackage{makecell}
+\usepackage{multicol}
+\usepackage{titling}
+\predate{}
+\postdate{}
+\date{}
 
 \addbibresource{report.bib}
-\title{Analysis of TransUNet}
+\title{Analysis of TransUNet: Hybrid CNN-Transformer}
 \author{Kutay Ugurlu}
 
 \begin{document}
+\maketitle
+\nopagebreak
+\onecolumn{
+\tableofcontents
+\listoffigures
+\listoftables
+}
+\twocolumn
 \maketitle
 \begin{abstract}
     Medical image segmentation is a cruical part of developing healthcare systems, not only in imaging in the covnentional sense, but also in electrical source imaging of brain and heart \cite{gonzalez2020ecgi}. So far, U-Net\cite[text]{ronneberger2015u} has become ubiquitous in the medical image segmentation tasks due to its recognized performance. However, the intrinsic features of convolutional neural networks(CNNs) that extract the local features of the spatial region in the image, the architecture exhibits some limitations finding the long-range patterns. On the other hand, transformers, that were developed for sequence-to-sequence predictions, are able to recognise the global patterns via the utilization of attention mechanism \cite{vaswani2017attention}. Chen, \textit{et al.}, propose a hybrid CNN-Transformer network called TransUNet in their study  \cite{chen2021transunet} to tackle the problem of medical image segmentation exploiting both local and global dependencies in the images.
@@ -137,9 +150,9 @@ Once the input of the first transformer is layer obtained as described in \Cref{
 \subsubsection{Cascaded Upsampler (CUP)}
 The decoded feature representation $z_L \in \mathbb{R}^{\frac{HW}{P^2}} \times D$ is reshaped to $\frac{H}{P} \times \frac{W}{P}$. Then, by using 1$\times$1 convolution, the number of channels are reduced to number of classes. This approach directly applies bilinear upsampling (interpolation) on the coded representation and the resultant tensor is the output result. This na\"ive interpolation approac is called "None" in \cite{chen2021transunet}. Instead of this, the researchers cascade multiple upsampling blocks consisting of 2$\times$ upsampling operator, a $3\times 3$ convolution layer and ReLU nonlinearity successively. 
 
-\subsection{Experiments and Results}
+\section{Experiments and Results}
 
-\subsubsection{Performance Metrics} 
+\subsection{Performance Metrics} 
 
 The metrics defined in \Cref{eq:DC,eq:HD} are utilized for the evaluation of the performance.
 
@@ -167,8 +180,8 @@ When the model predictions show exact match with labelled regions, both metrics 
 \vfill\null\newpage
 
 \begin{table}[h]
-\caption{Automated Cardiac Diagnosis Challenge dataset results}\label{tab:acdc}
 \centering{
+\caption{Automated Cardiac Diagnosis Challenge dataset results}\label{tab:acdc}
 \begin{tabular}{|c|c|ccc|} \hline
     Framework & Average & RV & Myo & LV \\ \hline
     R50-U-Net & 87.55 & 87.10 & 80.63 & 94.62 \\
@@ -179,11 +192,10 @@ When the model predictions show exact match with labelled regions, both metrics 
 \end{tabular}}
 \end{table}
 
-\subsubsection{Original Results \cite{chen2021transunet}}
+\subsection{Original Results \cite{chen2021transunet}}
 
-There are a series of ablation studies to determine the number of skip connections, input resolution, patch size and sequence length. The latter three are dependent on each other by the relation $P^2L = WH = W^2$, where $P$ is the patch size, $L$ is the sequence length and $W$ and $H$ is the input image sizes. To train the proposed network, Chen \textit{et al.} used 30 abdominal CT scans in the MICCAI 2015 Multi-Atlas Abdomen Labelling Challenge, adding up to 3779 axial contrast-enhanced images from SYNAPSE dataset and ACDC dataset. The experiments are done with different encoder and decoder architectures and the average DSC in percentage and Hausdorff distance in millimeters for eight abdominal organs with a random split 18 training and 12 validation cases are reported. Looking at \Cref{fig:table}, we see that TransUNet outperforms the best predecessor by 2.8\% in terms of average DSC and it reduced the HD by approximately 3\% when compared with the best predecessor. It is possible to investigate that the proposed method's performance is the best for 4 organs presented in \Cref{fig:table}. In \Cref{tab:acdc}, we observe that for both metrics, TransUNet outperformed the others for segmentation classes Left Ventricle, Myocardium and Right Ventricle.
-\vfill\null\newpage
-\paragraph{Implementation details and training setup}
+There are a series of ablation studies to determine the number of skip connections, input resolution, patch size and sequence length. The latter three are dependent on each other by the relation $P^2L = WH = W^2$, where $P$ is the patch size, $L$ is the sequence length and $W$ and $H$ is the input image sizes.
+PyTorch \cite{paszke2017automatic} deep learning framework is used to train the models.
 The models are trained on a single Nvidia RTX2080Ti GPU with following hyperparameters:
 \begin{itemize}
     \item Input size: 224 $\times$ 224
@@ -196,9 +208,72 @@ The models are trained on a single Nvidia RTX2080Ti GPU with following hyperpara
     \item Default batch size: 24
 \end{itemize}
 
+\begin{figure*}[h]
+\centering
+\includegraphics[width=\textwidth]{img/slice_173.png}
+\caption{False positive predictions in Slice 173 in concatenated data}\label{fig:slice1}
+\end{figure*}
+\begin{figure*}[h]
+\centering
+\includegraphics[width=\textwidth]{img/slice_61.png}
+\caption{Predictions in Slice 61 in concatenated data}\label{fig:slice2}
+\end{figure*}
 
+The TransUNet model that are used to produce these results are what is referred to as \textbf{base} model in the ablation results. To train the proposed network, Chen \textit{et al.} used 30 abdominal CT scans in the MICCAI 2015 Multi-Atlas Abdomen Labelling Challenge, adding up to 3779 axial contrast-enhanced images from SYNAPSE dataset and ACDC dataset. The experiments are done with different encoder and decoder architectures and the average DSC in percentage and Hausdorff distance in millimeters for eight abdominal organs with a random split 18 training and 12 validation cases are reported. Looking at \Cref{fig:table}, we see that TransUNet outperforms the best predecessor by 2.8\% in terms of average DSC and it reduced the HD by approximately 3\% when compared with the best predecessor. It is possible to investigate that the proposed method's performance is the best for 4 organs presented in \Cref{fig:table}. In \Cref{tab:acdc}, we observe that for both metrics, TransUNet outperformed the others for segmentation classes Left Ventricle, Myocardium and Right Ventricle.
 
-\clearpage
+\subsection{Replicated Results}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{img/celoss.png}
+\caption{Cross entropy loss during training}\label{fig:celoss}
+\end{figure}
+
+\subsubsection{Training}
+The models are trained on a single NVIDIA GeForce GTX 1660 Ti on TU116-A GPU
+with following hyperparameters:
+\begin{itemize}
+    \item Input size: 224 $\times$ 224
+    \item Patch size: 16
+    \item Learning rate: 0.01
+    \item Momentum 0.9 
+    \item Weight decay: 0.0001
+    \item Optimizer: Sthocastic Gradient Descent
+    \item Number of training epochs: 150
+    \item Batch size: 8
+\end{itemize} 
+The batch size are updated due to the limited GPU memory size. With the given configuration above, the training took 18 hours with 150 epochs on 83 scans with 1009 slices that were provided as averaged training images. 
+
+\subsubsection{Inference}
+On inference time, 12 different test cases were evaluated. The inference took approximately 2 minutes per case on average. DSC and HD are calculated between the ground truth and the model outputs slice-by-slice and mean of the metrics along the slice dimension are calculated for each test case. Then, mean$\pm$std DC metric are calculated along with the median(IQR) HD metric are calculated for each test cases:
+
+\begin{itemize}
+    \item DSC: 0.7810 $\pm$ 0.0841
+    \item HD: 10.9264 (35.5377)
+\end{itemize}
+
+The network produce only 8 organs' individual results. For the inference whose results given above, the corresponding evaluations for individual organs are presented in \Cref{tab:organs}. Although most of the predictions match with corresponding ground truth labellings as shown in \Cref{fig:slice2}, there were some cases where some false positive detections are identified. This may be due to the undertrained model due to the given limited time and computational resources. Although we expect the model to find 3 different classes in \Cref{fig:slice1}, there were 5 different classes predicted in the inference time. 
+
+\begin{table}[h]
+\caption{\label{tab:organs}Segmentation performance on individual organs utilized in the study}
+\centering{
+\begin{tabular}{|c|c|c|} \hline
+    \diagbox{Organ}{Metric} & DSC & \makecell{HD\\(mm)} \\ \hline
+    Aorta & 0.86 & 13.85\\ \hline
+    Gallbladder & 0.64 & 18.74\\ \hline
+    Spleen & 0.83 & 41.36\\ \hline
+    Left Kidney & 0.79 & 33.65\\ \hline
+    Right Kidney & 0.92 & 37.61\\ \hline
+    Liver & 0.61 & 15.07\\ \hline
+    Pancreas & 0.86 & 45.46\\ \hline
+    Spleen & 0.76 & 21.03\\ \hline
+\end{tabular}}
+\end{table}
+
+\section{Conclusion}
+
+In this project report, the study \textit{TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation} is analyzed and some of the results were replicated in a different training and testing configurations. The results are satisfying given the models size and predictions, even when compared with the state-of-the-art. Although detailed ablation studies for different hyperparameters are already conducted, the inference can be improved by training the model on a dataset that has more diverse distributions. 
+
+\vfill\null\newpage
 \printbibliography{}
 \end{document}
-
