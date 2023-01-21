@@ -1,6 +1,5 @@
 project_TransUNet/data
 project_TransUNet/model
-project_TransUNet/predictions
 project_TransUNet/datasets
 project_TransUNet/networks
 project_TransUNet/lists
