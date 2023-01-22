@@ -9,6 +9,7 @@ For the visualization of the data, [visualization script](https://github.com/kut
 
 ![a)Ground truth data, b)Labels, c)Predictions](https://github.com/kutay-ugurlu/TransUNet_Analysis/blob/main/project_TransUNet/predictions/gif_predict/example01.gif)
 
+## Leaving the explanation in the original repo as is below:
 # TransUNet
 This repo holds code for [TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation](https://arxiv.org/pdf/2102.04306.pdf)
 
