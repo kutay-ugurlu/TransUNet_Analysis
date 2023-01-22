@@ -5,7 +5,7 @@ This repo holds code for the replicated results and visualizations for the study
 For the Python environment setup, training and testing, the procedure described in [original repository](https://github.com/Beckschen/TransUNet) is followed. 
 The preprocessed data has been used with R50-ViT-B_16 pretrained model in training for 150 epoch gfor batch size of 8. Testing is on the test volume provided. 
 
-For the visualization of the data, 
+For the visualization of the data, [visualization script](https://github.com/kutay-ugurlu/TransUNet_Analysis/blob/main/project_TransUNet/predictions/TU_Synapse224/TU_pretrain_R50-ViT-B_16_skip3_epo150_bs8_224/visualize_predictions.py) is used. 
 
 ![a)Ground truth data, b)Labels, c)Predictions](https://github.com/kutay-ugurlu/TransUNet_Analysis/blob/main/project_TransUNet/predictions/gif_predict/example01.gif)
 
