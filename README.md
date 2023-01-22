@@ -1,3 +1,14 @@
+
+# Analysis of TransUNet
+This repo holds code for the replicated results and visualizations for the study _TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation_ for the term project of MIN711. 
+
+For the Python environment setup, training and testing, the procedure described in [original repository](https://github.com/Beckschen/TransUNet) is followed. 
+The preprocessed data has been used with R50-ViT-B_16 pretrained model in training for 150 epoch gfor batch size of 8. Testing is on the test volume provided. 
+
+For the visualization of the data, 
+
+![a)Ground truth data, b)Labels, c)Predictions](https://github.com/kutay-ugurlu/TransUNet_Analysis/blob/main/project_TransUNet/predictions/gif_predict/example01.gif)
+
 # TransUNet
 This repo holds code for [TransUNet: Transformers Make Strong Encoders for Medical Image Segmentation](https://arxiv.org/pdf/2102.04306.pdf)
 
