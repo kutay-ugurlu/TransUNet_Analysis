@@ -242,7 +242,7 @@ with the following hyperparameters:
     \item Number of training epochs: 150
     \item Batch size: 8
 \end{itemize} 
-The batch size is updated due to the limited GPU memory size. With the given configuration above, the training took 18 hours with 150 epochs on 83 scans with 1009 slices that were provided as averaged training images. 
+For training, argparser that is provided in the original repository is utilized as explained the documentation. The batch size is updated due to the limited GPU memory size. With the given configuration above, the training took 18 hours with 150 epochs on 83 scans with 1009 slices that were provided as averaged training images. 
 
 \subsubsection{Inference}
 On inference time, 12 different test cases were evaluated. The inference took approximately 2 minutes per case on average. DSC and HD are calculated between the ground truth and the model outputs slice-by-slice and the mean of the metrics along the slice dimension is calculated for each test case. Then, mean$\pm$std DC metric is calculated along with the median(IQR) HD metric are calculated for each test case:
